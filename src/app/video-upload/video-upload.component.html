@@ -1,4 +1,4 @@
-<input type="file" class="file-input" [accept]="'video/mp4'" (change)="onFileSelected($event)" #fileUpload>
+<!-- <input type="file" class="file-input" [accept]="'video/mp4'" (change)="onFileSelected($event)" #fileUpload>
 
 <div class="file-upload">
 
@@ -16,5 +16,30 @@
   <mat-progress-bar class="progress-bar" mode="determinate" [value]="uploadProgress" *ngIf="uploadProgress"></mat-progress-bar>
 
   <mat-icon class="cancel-upload" (click)="cancelUpload()" *ngIf="uploadProgress">delete_forever</mat-icon>
+
+</div> -->
+
+
+<div class="center">
+  <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
+    (onFileLeave)="fileLeave($event)" accept=".mp4" [multiple]=false>
+    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+      Optional custom content that replaces the the entire default content.
+      <button type="button" (click)="openFileSelector()">Browse Files</button>
+    </ng-template>
+  </ngx-file-drop>
+
+  <div class="row" style="margin-top: 30px;">
+    <div class="col-6" style="margin-top: 30px;">
+      <div *ngIf="url"><strong>selected video:</strong></div>
+      <div style="margin-top: 10px;" *ngFor="let item of files; let i=index">
+        {{ item.relativePath }}
+      </div>
+      <button style="margin-top: 40px;" *ngIf="url"  class="btn btn-primary" type="button" (click)="uploadVideo()">Upload</button>
+    </div>
+    <div class="col-6" style="margin-top: 30px;"> <video *ngIf="url" [src]="url" height="200" controls></video>
+    </div>
+  </div>
+
 
 </div>
