@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-6">
+        <form class="example-container" [formGroup] = "videoFormGroup">
+            <mat-form-field >
+                <mat-label for="title">Title</mat-label>
+                <input formControlName="title" class="title" matInput>
+                <!-- <mat-error *ngIf="f.['title'].touched && f.title.invalid">First Name is required.</mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label for="description">Description</mat-label>
+                <textarea  formControlName="description" matInput></textarea>
+            </mat-form-field>
+
+            <mat-form-field >
+                <mat-label for="videoStatus">Video Status</mat-label>
+                <mat-select formControlName="videoStatus" placeholder="Select">
+                    <mat-option value="private">private</mat-option>
+                    <mat-option value="public">public</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-chip-list">
+                <mat-label>Add tags</mat-label>
+                <mat-chip-grid #chipGrid aria-label="Add tags">
+                    @for (tag of tags; track tag) {
+                    <mat-chip-row (removed)="remove(tag)" [editable]="true" (edited)="edit(tag, $event)"
+                        [aria-description]="'press enter to edit ' + tag">
+                        {{tag}}
+                        <button matChipRemove [attr.aria-label]="'remove ' + tag">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip-row>
+                    }
+                    <input formControlName="tags" placeholder="New tag..." [matChipInputFor]="chipGrid"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="add($event)" />
+                </mat-chip-grid>
+            </mat-form-field>
+        </form>
+        <div>
+            <label style="color: grey; margin: 0px 0px 5px 15px;">Thumbnail</label>
+            <input class="form-control" type="file" accept="image/*" (change)="onChange($event)">
+            <button *ngIf="thumbNailUpload" (click)="onUpload()" style="margin-top: 10px; margin-left: 15px;" class="btn btn-success">
+                Upload
+            </button>
+        </div>
+        <div>
+            <button *ngIf="metaDataUpload" (click)="onUploadMetaData()" [disabled]="!videoFormGroup.valid" type="submit" style="margin-top: 10px; margin-left: 15px;"
+                class="btn btn-success">
+                Submit
+            </button>
+        </div>
+    </div>
+    <div class="col-6">
+
+    </div>
+</div>

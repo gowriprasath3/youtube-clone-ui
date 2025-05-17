@@ -1,0 +1,16 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.example-container>* {
+    width: 100%;
+}
+
+.title {
+    height: 10px;
+}
+
+.example-chip-list {
+    width: 100%;
+}
